@@ -6,6 +6,8 @@ const cors = require("cors");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+let permissionRouter = require('./routes/permission')
+let roleRouter = require('./routes/role')
 
 
 var app = express();
@@ -18,6 +20,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/role', roleRouter);
+// app.use('/permission', permissionRouter)
 app.use('/api/v1/users', usersRouter);
 
 module.exports = app;

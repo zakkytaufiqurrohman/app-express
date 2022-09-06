@@ -2,6 +2,9 @@
 const {
   Model
 } = require('sequelize');
+
+const bcrypt = require("bcrypt");
+
 module.exports = (sequelize, DataTypes) => {
   class user extends Model {
     /**
@@ -22,5 +25,25 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'user',
   });
+  
+  // create password hash
+  user.beforeSave(async (user, options) => {
+    if (user.password) {
+      user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
+    }
+  });
+  // hidden field password
+  user.afterCreate( async (record) => {
+    delete record.dataValues.password;
+  });
+  // compare password
+  user.prototype.comparePassword = function (passw, cb) {
+    bcrypt.compare(passw, this.password, function (err, isMatch) {
+        if (err) {
+            return cb(err);
+        }
+        cb(null, isMatch);
+    });
+  };
   return user;
 };

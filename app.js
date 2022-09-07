@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 let permissionRouter = require('./routes/permission')
 let roleRouter = require('./routes/role')
+let autRouter = require('./routes/auth')
 
 
 var app = express();
@@ -22,6 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/v1/master/role', roleRouter);
 app.use('/api/v1/master/permission', permissionRouter)
+app.use('/api/v1/auth',autRouter)
 app.use('/api/v1/users', usersRouter);
 
 module.exports = app;

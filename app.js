@@ -20,8 +20,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/role', roleRouter);
-app.use('/permission', permissionRouter)
+app.use('/api/v1/master/role', roleRouter);
+app.use('/api/v1/master/permission', permissionRouter)
 app.use('/api/v1/users', usersRouter);
 
 module.exports = app;
